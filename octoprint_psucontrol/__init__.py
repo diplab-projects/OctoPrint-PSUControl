@@ -850,7 +850,7 @@ class PSUControl(octoprint.plugin.StartupPlugin,
 
 
     def register_custom_events(self):
-        return ["psu_state_changed, psu_state_on, psu_state_off"]
+        return ["psu_state_changed", "psu_state_on", "psu_state_off"]
 
 
     def get_additional_permissions(self, *args, **kwargs):
