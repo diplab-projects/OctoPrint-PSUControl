@@ -304,6 +304,16 @@ class PSUControl(octoprint.plugin.StartupPlugin,
 
             self._logger.debug("isPSUOn: {}".format(self.isPSUOn))
 
+            if (self.isPSUOn == True):
+                self._logger.debug("PSU state is ON, firing psu_state_on event.")
+                event = Events.PLUGIN_PSUCONTROL_PSU_STATE_ON
+                self._event_bus.fire(event, payload=dict(isPSUOn=self.isPSUOn))
+
+            elif (self.isPSUON == False):
+                self._logger.debug("PSU state is OFF, firing psu_state_off event.")
+                event = Events.PLUGIN_PSUCONTROL_PSU_STATE_OFF
+                self._event_bus.fire(event, payload=dict(isPSUOn=self.isPSUOn))               
+
             if (old_isPSUOn != self.isPSUOn):
                 self._logger.debug("PSU state changed, firing psu_state_changed event.")
 
@@ -840,7 +850,7 @@ class PSUControl(octoprint.plugin.StartupPlugin,
 
 
     def register_custom_events(self):
-        return ["psu_state_changed"]
+        return ["psu_state_changed, psu_state_on, psu_state_off"]
 
 
     def get_additional_permissions(self, *args, **kwargs):
